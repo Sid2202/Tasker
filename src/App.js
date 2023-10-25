@@ -1,5 +1,4 @@
 import {useState} from 'react';
-import Card from './Card';
 import Column from './Column';
 
 function App() {
@@ -7,21 +6,37 @@ function App() {
   const [columns, setColumns] = useState({
     column1: {
       id: 'column1',
-      title: 'Column 1',
+      title: 'Not Started',
       cards: [
-        { id: 'card1', content: 'Card 1' },
-        { id: 'card2', content: 'Card 2' },
+        { id: 'card1', content: 'Code merge' },
+        { id: 'card2', content: 'coffee' },
       ],
     },
     column2: {
       id: 'column2',
-      title: 'Column 2',
+      title: 'In progress',
       cards: [
-        { id: 'card3', content: 'Card 3' },
-        { id: 'card4', content: 'Card 4' },
+        { id: 'card3', content: 'Portfolio website' },
+        { id: 'card4', content: 'UI/UX' },
+      ],
+    },
+    column3: {
+      id: 'column3',
+      title: 'Completed',
+      cards: [
+        { id: 'card5', content: 'wakeup' },
+        { id: 'card6', content: 'Drink water' },
       ],
     },
   });
+
+  const addCard = (columnId, content) => {
+    const newColumns = { ...columns };
+    const cardId = `${columnId}-${Date.now()}`;
+    newColumns[columnId].cards.push({ id: cardId, content });
+    setColumns(newColumns);
+  };
+  
 
   const handleDragStart = (e, card, column) => {
     const cardId = card.id
@@ -29,6 +44,7 @@ function App() {
     e.dataTransfer.setData('cardId', cardId);
     e.dataTransfer.setData('columnId', columnId);
     console.log(cardId);
+    console.log(columnId);
 };
 
   const handleDrop = (e, columnId) => {
@@ -42,6 +58,7 @@ function App() {
     const destColumn = newColumns[columnId];
     console.log("this is destColumn: ", destColumn);
     const card = sourceColumn.cards.find((c) => c.id === cardId);
+
     console.log("this is card: ", card);
     sourceColumn.cards = sourceColumn.cards.filter((c) => c.id !== cardId);
     newColumns[columnId].cards = [...newColumns[columnId].cards, card];
@@ -50,99 +67,22 @@ function App() {
 
 
   return (
-    <div className="flex p-4">
-      {/* <h1>Tasker</h1>
-
+    <div className="h-screen w-full flex flex-col p-4 items-center">
       <div>
-        <h2>Tasks</h2>
-
-        <div className="flex">
-          <div class="stack" className="flex flex-col m-4 w-1/3">
-            <div className="flex justify-between">
-              <h2>Not started</h2>
-              <button className="text-gray-500">+</button>
-            </div>
-
-            <div class="card" draggable className="ring-gray-300 ring-1 rounded p-2 shadow-md m-1">
-              <h2>task1</h2>
-            </div>
-            <div class="card" draggable className="ring-gray-300 ring-1 rounded p-2 shadow-md m-1">
-              <h2>task2</h2>
-            </div>
-
-            <div>
-              <button className="p-2 text-gray-500">+ New</button>
-            </div>
-
-          </div>
-
-
-          <div class="stack" className="flex flex-col m-4 w-1/3">
-            <div className="flex justify-between">
-              <h2>Not started</h2>
-              <button className="text-gray-500">+</button>
-            </div>
-
-            <div class="card" className="ring-gray-300 ring-1 rounded p-2 shadow-md m-1">
-              <h2>task1</h2>
-            </div>
-            <div class="card" className="ring-gray-300 ring-1 rounded p-2 shadow-md m-1">
-              <h2>task2</h2>
-            </div>
-
-            <div>
-              <button className="p-2 text-gray-500">+ New</button>
-            </div>
-            
-          </div>
-
-
-          <div class="stack" className="flex flex-col m-4 w-1/3">
-            <div className="flex justify-between">
-              <h2>Not started</h2>
-              <button className="text-gray-500">+</button>
-            </div>
-
-            <div class="card" className="ring-gray-300 ring-1 rounded p-2 shadow-md m-1">
-              <h2>task1</h2>
-            </div>
-            <div class="card" className="ring-gray-300 ring-1 rounded p-2 shadow-md m-1">
-              <h2>task2</h2>
-            </div>
-
-            <div>
-              <button className="p-2 text-gray-500">+ New</button>
-            </div>
-            
-          </div>
-        </div>
-
-
-      </div> */}
-
-      {Object.values(columns).map((column) => (
-          <div
-          className="flex flex-col m-6 w-1/3"
-          key={column.id}
-          column={column}
-          onDragOver={(e) => e.preventDefault()}
-          onDrop={(e) => handleDrop(e, column.id)}
-          cards={column.cards}
-          >
-          <h2>{column.title}</h2>
-          {column.cards.map((card) => (
-            <div
-              className="ring-gray-300 ring-1 rounded p-2 shadow-md m-1"
-              key={card.id}
-              card={card}
-              draggable="true"
-              onDragStart={(e) => handleDragStart(e, card, column)}
-            >
-              <h2>{card.content}</h2>
-            </div>
-          ))}
-          </div>
-      ))}
+        <p className='font-mono text-4xl p-4 font-semibold'>✔︎Tasker</p>
+      </div>
+      <div className='flex w-full'>
+        {Object.values(columns).map((column) => (
+            <Column
+              key={column.id}
+              column={column}
+              onDrop={(e) => handleDrop(e, column.id)}
+              cards={column.cards}
+              onDragStart={(e, card) => handleDragStart(e, card, column)}
+              addCard={addCard}
+            />
+        ))}
+      </div>
 
     </div>
   );

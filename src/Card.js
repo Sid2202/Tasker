@@ -1,23 +1,19 @@
 import React from 'react';
 
-const Card = ({ card, onDragStart }) => {
+const Card = ({ card, onDragStart, column }) => {
 
-    const handleDragStart = (e, card) => {
-        e.dataTransfer.setData('cardId', card.id);
+    const handleDragStart = (e, card, column) => {
+        // e.dataTransfer.setData('cardId', card.id);
+        onDragStart(e, card, column);
     };
 
   return (
     <div
-      class="card"
       draggable="true"
-      onDragStart={(e) => handleDragStart(e, card)}
-    //   onDragEnd={onDragEnd}
-
-      className="ring-gray-300 ring-1 rounded p-2 shadow-md m-1"
+      onDragStart={(e) => handleDragStart(e, card, column)}
+      className="ring-gray-300 ring-1 rounded p-2 shadow-md m-2"
     >
-
-        {card.content}
-
+        <p className='text-sm font-semibold'>{card.content}</p>
     </div>
   );
 };
