@@ -23,16 +23,26 @@ function App() {
     },
   });
 
-  const handleDragStart = (e, card) => {
-    e.dataTransfer.setData('cardId', card.id);
+  const handleDragStart = (e, card, column) => {
+    const cardId = card.id
+    const columnId = column.id
+    e.dataTransfer.setData('cardId', cardId);
+    e.dataTransfer.setData('columnId', columnId);
+    console.log(cardId);
 };
 
   const handleDrop = (e, columnId) => {
     e.preventDefault();
     const cardId = e.dataTransfer.getData('cardId');
+    const sourceColumnId = e.dataTransfer.getData('columnId');
+    console.log("this is drop: ", cardId);
     const newColumns = { ...columns };
-    const sourceColumn = newColumns[columnId];
-    const card = columns[cardId];
+    const sourceColumn = newColumns[sourceColumnId];
+    console.log("this is sourceColumn: ", sourceColumn);
+    const destColumn = newColumns[columnId];
+    console.log("this is destColumn: ", destColumn);
+    const card = sourceColumn.cards.find((c) => c.id === cardId);
+    console.log("this is card: ", card);
     sourceColumn.cards = sourceColumn.cards.filter((c) => c.id !== cardId);
     newColumns[columnId].cards = [...newColumns[columnId].cards, card];
     setColumns(newColumns);
@@ -111,24 +121,27 @@ function App() {
       </div> */}
 
       {Object.values(columns).map((column) => (
-          <Column
+          <div
+          className="flex flex-col m-6 w-1/3"
           key={column.id}
           column={column}
+          onDragOver={(e) => e.preventDefault()}
           onDrop={(e) => handleDrop(e, column.id)}
           cards={column.cards}
           >
+          <h2>{column.title}</h2>
           {column.cards.map((card) => (
             <div
               className="ring-gray-300 ring-1 rounded p-2 shadow-md m-1"
               key={card.id}
               card={card}
               draggable="true"
-              onDragStart={(e) => handleDragStart(e, card)}
+              onDragStart={(e) => handleDragStart(e, card, column)}
             >
-              {card.content}
+              <h2>{card.content}</h2>
             </div>
           ))}
-          </Column>
+          </div>
       ))}
 
     </div>
