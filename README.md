@@ -1,6 +1,6 @@
 # Tasker 🐔
 
-This is your personal task board to organise tasks at <a href="https://tasker-sid2202.vercel.app/"> Tasker</a>
+This is your personal task board to organise tasks -> <a href="https://tasker-sid2202.vercel.app/"> Tasker</a>
 
 ## Organise, Create and finish your tasks and stay productive🌟
 
