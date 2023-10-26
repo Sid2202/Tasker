@@ -34,10 +34,7 @@ export const columnsReducer = (state, action) => {
   switch (action.type) {
     case 'addCard':
       const { columnId, content } = action.payload;
-      // const newColumns = { ...state };
-      // const cardId = `${columnId}-${Date.now()}`;
-      // newColumns[columnId].cards.push({ id: cardId, content });
-      // return newColumns;
+
       return {
         ...state,
         [columnId]: {
@@ -61,6 +58,32 @@ export const columnsReducer = (state, action) => {
         ...state,
           [newColumnId]: newColumn,
       };
+    case 'editCardContent':
+      const { colId, carId, newContent } = action.payload;
+      const newSt = { ...state };
+      if (newSt[colId]) {
+        const column = newSt[colId];
+        if (column.cards) {
+          const card = column.cards.find((c) => c.id === carId);
+    
+          if (card) {
+            card.content = newContent;
+          }
+        }
+      }
+      return newSt;
+    
+    case 'deleteCard':
+      const { col, car} = action.payload;
+      const newSta = { ...state };
+      if (newSta[col]) {
+        const column = newSta[col];
+        if (column.cards) {
+          column.cards = column.cards.filter((c) => c.id !== car);
+        }
+      }
+      return newSta;
+
     case 'moveCard':
       const { sourceCardId, sourceColumnId, destColumnId } = action.payload;
       const newState = { ...state };
