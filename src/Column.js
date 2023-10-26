@@ -30,7 +30,7 @@ const Column = ({ column, cards, onDrop, onDragStart, addCard }) => {
                 <p className='text-gray-500 px-2'>{column.cards.length}</p>
             </div>
             <div className='flex'>
-                <div><image src = {dots} alt="." /></div>
+                {/* <div><image src = {dots} alt="." /></div> */}
                 <button onClick={handleAddCard} className='text-gray-500'>+</button>
             </div>
         </div>
