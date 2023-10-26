@@ -4,6 +4,7 @@ export const initialState = {
   column1: {
     id: 'column1',
     title: 'Not Started',
+    color: 'bg-rose-200',
     cards: [
       { id: 'card1', content: 'Code merge' },
       { id: 'card2', content: 'coffee' },
@@ -12,6 +13,7 @@ export const initialState = {
   column2: {
     id: 'column2',
     title: 'In progress',
+    color: 'bg-yellow-200',
     cards: [
       { id: 'card3', content: 'Portfolio website' },
       { id: 'card4', content: 'UI/UX' },
@@ -20,6 +22,7 @@ export const initialState = {
   column3: {
     id: 'column3',
     title: 'Completed',
+    color: 'bg-green-200',
     cards: [
       { id: 'card5', content: 'wakeup' },
       { id: 'card6', content: 'Drink water' },
@@ -52,6 +55,7 @@ export const columnsReducer = (state, action) => {
         id: newColumnId,
         title,
         cards: [],
+        color: 'bg-blue-200'
       }
       return{
         ...state,

@@ -68,7 +68,7 @@ const Column = ({ columnId }) => {
     >
         <div className='flex justify-between mx-1 text-sm mb-2'>
             <div className='flex'>
-                <p className='bg-lime-400 rounded px-1'>{columns[columnId].title}</p>
+                <p className={`${columns[columnId].color} rounded px-1`}>{columns[columnId].title}</p>
                 <p className='text-gray-500 px-2'>{columns[columnId].cards.length}</p>
             </div>
             <div className='flex'>
