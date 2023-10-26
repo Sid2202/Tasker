@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useContext} from 'react';
+// import { ColContext } from './ColContext';
 
 const Card = ({ card, onDragStart, column }) => {
 
@@ -11,7 +12,7 @@ const Card = ({ card, onDragStart, column }) => {
     <div
       draggable="true"
       onDragStart={(e) => handleDragStart(e, card, column)}
-      className="ring-gray-300 ring-1 rounded p-2 shadow-md m-2"
+      className="ring-gray-300 ring-1 rounded p-2 shadow-md m-1"
     >
         <p className='text-sm font-semibold'>{card.content}</p>
     </div>

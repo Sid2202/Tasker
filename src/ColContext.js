@@ -31,10 +31,32 @@ export const columnsReducer = (state, action) => {
   switch (action.type) {
     case 'addCard':
       const { columnId, content } = action.payload;
-      const newColumns = { ...state };
-      const cardId = `${columnId}-${Date.now()}`;
-      newColumns[columnId].cards.push({ id: cardId, content });
-      return newColumns;
+      // const newColumns = { ...state };
+      // const cardId = `${columnId}-${Date.now()}`;
+      // newColumns[columnId].cards.push({ id: cardId, content });
+      // return newColumns;
+      return {
+        ...state,
+        [columnId]: {
+          ...state[columnId],
+          cards: [
+            ...state[columnId].cards,
+            { id: `${columnId}-${Date.now()}`, content },
+          ],
+        },
+      };
+    case 'addColumn':
+      const {title} = action.payload;
+      const newColumnId = `${title}-${Date.now()}`;
+      const newColumn = {
+        id: newColumnId,
+        title,
+        cards: [],
+      }
+      return{
+        ...state,
+          [newColumnId]: newColumn,
+      };
     case 'moveCard':
       const { sourceCardId, sourceColumnId, destColumnId } = action.payload;
       const newState = { ...state };
