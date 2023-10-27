@@ -12,7 +12,6 @@ const Card = ({ card, onDragStart, column }) => {
         <div
             draggable="true"
             onDragStart={(e) => handleDragStart(e, card, column)}
-        //   onClick={handleEditCard}
             className="ring-gray-300 ring-1 rounded p-2 shadow-md m-1 cursor-grab"
         >
                 <Link to={`/edit/${column.id}/${card.id}`}

@@ -2,6 +2,7 @@ import {useState, useContext} from 'react';
 import Card from './Card';
 import dots from './assets/dots.png'
 import { ColContext } from './ColContext';
+import ClickAwayListener from 'react-click-away-listener';
 
 const Column = ({ columnId }) => {
 
@@ -10,6 +11,7 @@ const Column = ({ columnId }) => {
     const [newColumnTitle, setNewColumnTitle] = useState('');
     const [showInput, setShowInput] = useState(false);
     const [showColInput, setShowColInput] = useState(false);
+    const [showColor, setShowColor] = useState(false);
 
 
     const handleDragStart = (e, card) => {
@@ -61,6 +63,22 @@ const Column = ({ columnId }) => {
     };
 
 
+
+    const handleChangeColor = (color) => {
+        if(showColor){
+            console.log("change color to", color);
+            const columnColorId = columnId
+            const newColor = color.toString()
+            dispatch({
+                type: 'changeColor',
+                payload: {columnColorId, newColor}
+            })
+            setShowColor(false);
+        }
+        
+    }
+
+
   return (
     <div className="flex flex-col m-6 w-1/3"
       onDragOver={(e) => e.preventDefault()}
@@ -72,7 +90,22 @@ const Column = ({ columnId }) => {
                 <p className='text-gray-500 px-2'>{columns[columnId].cards.length}</p>
             </div>
             <div className='flex'>
-                <button className='px-1'><img width={20} height={20} className='' src = {dots} alt="." /></button>
+                <button onClick={()=>setShowColor(true)} className='px-1'><img width={20} height={20} className='' src = {dots} alt="." /></button>
+
+                <div>
+                {showColor && (
+                    <ClickAwayListener onClickAway={() => setShowColor(false)}>
+                    <div className='ring-gray-300 ring-1 rounded p-2 absolute bg-white'>
+                        <button onClick={() =>handleChangeColor("bg-blue-200")} className=' p-3 py-3 m-1 border-1 border-black bg-blue-200 rounded '></button>
+                        <button onClick={() =>handleChangeColor("bg-rose-200")} className='p-3 py-3 m-1 bg-rose-200 rounded'></button>
+                        <button onClick={() =>handleChangeColor("bg-yellow-200")} className='p-3 py-3 m-1 bg-yellow-200 rounded'></button>
+                        <button onClick={() =>handleChangeColor("bg-green-200")} className='p-3 py-3 m-1 bg-green-200 rounded'></button>
+                        <button onClick={() =>handleChangeColor("bg-violet-200")} className='p-3 py-3 m-1 bg-violet-200 rounded'></button>
+                    </div>
+                    </ClickAwayListener>
+                )}
+                </div>
+
                 <button onClick={() => setShowColInput(true)} className='text-gray-500'>+</button>
                 <div>
                 {showColInput && (

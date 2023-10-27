@@ -58,6 +58,16 @@ export const columnsReducer = (state, action) => {
         ...state,
           [newColumnId]: newColumn,
       };
+    case 'changeColor':
+      const {columnColorId, newColor} = action.payload;
+      const newStateColor = { ...state };
+      if (newStateColor[columnColorId]) {
+        const column = newStateColor[columnColorId];
+        if (column.color) {
+          column.color = newColor;
+        }
+      }
+      return newStateColor;
     case 'editCardContent':
       const { colId, carId, newContent } = action.payload;
       const newSt = { ...state };
