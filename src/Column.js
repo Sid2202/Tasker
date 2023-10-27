@@ -80,7 +80,7 @@ const Column = ({ columnId }) => {
 
 
   return (
-    <div className="flex flex-col m-6 w-1/3"
+    <div className="flex flex-col m-6 w-1/4"
       onDragOver={(e) => e.preventDefault()}
       onDrop={(e) => handleDrop(e, columnId)}
     >
